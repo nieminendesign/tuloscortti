@@ -1,0 +1,3 @@
+# Tuloscortti
+
+Golfkierrosten tulosseuranta sovellus.
