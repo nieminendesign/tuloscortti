@@ -1,3 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-ReactDOM.createRoot(document.getElementById('root')).render(<div>Tuloscortti</div>);
+import './index.css';
+import App from './pages/App';
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
