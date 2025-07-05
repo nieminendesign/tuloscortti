@@ -1,0 +1,1 @@
+// kenttävalinta + slope laskenta
