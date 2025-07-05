@@ -1,11 +1,11 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Start from '../views/Start.jsx';
+import React, { useState } from 'react';
+import CourseSelector from '../views/CourseSelector.jsx';
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Start />} />
-    </Routes>
+    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
+      <h1>Tuloscortti – Kenttä & HCP</h1>
+      <CourseSelector />
+    </div>
   );
 }
