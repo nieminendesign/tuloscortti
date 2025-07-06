@@ -1,10 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './pages/App.jsx';
-import { BrowserRouter } from 'react-router-dom';
+import App from './App.jsx';
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+
+const theme = createTheme({
+  palette: {
+    mode: 'light',
+    primary: {
+      main: '#2e7d32',
+    },
+  },
+  typography: {
+    fontFamily: 'Roboto, sans-serif',
+  },
+});
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <React.StrictMode>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>
 );
