@@ -1,39 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const courseData = {
-  "Pirunpelto": {
-    "par": 72,
-    "tees": {
-      "valkoinen": { rating: 72.9, slope: 137 },
-      "keltainen": { rating: 71.0, slope: 133 },
-      "sininen": { rating: 69.2, slope: 128 },
-      "punainen": { rating: 67.4, slope: 123 }
-    }
-  }
-};
-
 export default function CourseSelector() {
-  const [course, setCourse] = useState("Pirunpelto");
-  const [tee, setTee] = useState("keltainen");
+  const [holes, setHoles] = useState(18);
   const [hcpIndex, setHcpIndex] = useState(15.0);
   const [gender, setGender] = useState("male");
+  const [stats, setStats] = useState({
+    putts: true,
+    fairways: false,
+    greens: true,
+    chips: false
+  });
+
   const navigate = useNavigate();
 
-  const selected = courseData[course]?.tees[tee];
-  const coursePar = courseData[course]?.par || 72;
-  const rating = selected?.rating || 72;
-  const slope = selected?.slope || 113;
-
-  const playingHcp = Math.round((hcpIndex * slope) / 113 + (rating - coursePar));
+  const playingHcp = Math.round(hcpIndex); // yksinkertaistettu
 
   const startRound = () => {
     const setup = {
-      course,
-      tee,
+      holes,
       hcpIndex,
       gender,
-      playingHcp
+      playingHcp,
+      stats
     };
     localStorage.setItem("tuloscortti-setup", JSON.stringify(setup));
     navigate("/score");
@@ -42,19 +31,10 @@ export default function CourseSelector() {
   return (
     <div style={{ padding: "1rem", fontFamily: "sans-serif" }}>
       <h2>Kierroksen asetukset</h2>
-      <label>Kenttä:
-        <select value={course} onChange={e => setCourse(e.target.value)}>
-          {Object.keys(courseData).map(name => (
-            <option key={name} value={name}>{name}</option>
-          ))}
-        </select>
-      </label>
-      <br />
-      <label>Tii:
-        <select value={tee} onChange={e => setTee(e.target.value)}>
-          {Object.keys(courseData[course].tees).map(name => (
-            <option key={name} value={name}>{name}</option>
-          ))}
+      <label>Reikiä:
+        <select value={holes} onChange={e => setHoles(parseInt(e.target.value))}>
+          <option value={9}>Etuysi</option>
+          <option value={18}>Koko kierros</option>
         </select>
       </label>
       <br />
@@ -68,9 +48,15 @@ export default function CourseSelector() {
           <option value="female">Nainen</option>
         </select>
       </label>
-      <br /><br />
-      <strong>Pelitasoitus: {playingHcp} lyöntiä</strong>
-      <br /><br />
+      <br />
+      <fieldset>
+        <legend>Tilastot</legend>
+        <label><input type="checkbox" checked={stats.putts} onChange={e => setStats({ ...stats, putts: e.target.checked })}/> Putit</label><br />
+        <label><input type="checkbox" checked={stats.greens} onChange={e => setStats({ ...stats, greens: e.target.checked })}/> Green in Reg.</label><br />
+        <label><input type="checkbox" checked={stats.fairways} onChange={e => setStats({ ...stats, fairways: e.target.checked })}/> Avaus väylään</label><br />
+        <label><input type="checkbox" checked={stats.chips} onChange={e => setStats({ ...stats, chips: e.target.checked })}/> Chipit</label>
+      </fieldset>
+      <br />
       <button onClick={startRound}>Aloita kierros</button>
     </div>
   );
