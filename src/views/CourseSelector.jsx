@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const courseData = {
   "Pirunpelto": {
@@ -9,15 +10,6 @@ const courseData = {
       "sininen": { rating: 69.2, slope: 128 },
       "punainen": { rating: 67.4, slope: 123 }
     }
-  },
-  "Järvenranta": {
-    "par": 72,
-    "tees": {
-      "valkoinen": { rating: 73.1, slope: 134 },
-      "keltainen": { rating: 71.3, slope: 130 },
-      "sininen": { rating: 69.5, slope: 126 },
-      "punainen": { rating: 67.7, slope: 122 }
-    }
   }
 };
 
@@ -25,16 +17,31 @@ export default function CourseSelector() {
   const [course, setCourse] = useState("Pirunpelto");
   const [tee, setTee] = useState("keltainen");
   const [hcpIndex, setHcpIndex] = useState(15.0);
+  const [gender, setGender] = useState("male");
+  const navigate = useNavigate();
 
   const selected = courseData[course]?.tees[tee];
   const coursePar = courseData[course]?.par || 72;
   const rating = selected?.rating || 72;
   const slope = selected?.slope || 113;
 
-  const playingHcp = ((hcpIndex * slope) / 113 + (rating - coursePar)).toFixed(1);
+  const playingHcp = Math.round((hcpIndex * slope) / 113 + (rating - coursePar));
+
+  const startRound = () => {
+    const setup = {
+      course,
+      tee,
+      hcpIndex,
+      gender,
+      playingHcp
+    };
+    localStorage.setItem("tuloscortti-setup", JSON.stringify(setup));
+    navigate("/score");
+  };
 
   return (
-    <div>
+    <div style={{ padding: "1rem", fontFamily: "sans-serif" }}>
+      <h2>Kierroksen asetukset</h2>
       <label>Kenttä:
         <select value={course} onChange={e => setCourse(e.target.value)}>
           {Object.keys(courseData).map(name => (
@@ -54,8 +61,17 @@ export default function CourseSelector() {
       <label>Tasoitus (HCP):
         <input type="number" value={hcpIndex} onChange={e => setHcpIndex(parseFloat(e.target.value))} step="0.1" />
       </label>
+      <br />
+      <label>Sukupuoli:
+        <select value={gender} onChange={e => setGender(e.target.value)}>
+          <option value="male">Mies</option>
+          <option value="female">Nainen</option>
+        </select>
+      </label>
       <br /><br />
       <strong>Pelitasoitus: {playingHcp} lyöntiä</strong>
+      <br /><br />
+      <button onClick={startRound}>Aloita kierros</button>
     </div>
   );
 }

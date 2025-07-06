@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import CourseSelector from '../views/CourseSelector.jsx';
+import ScoreEntry from '../views/ScoreEntry.jsx';
 
 export default function App() {
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <h1>Tuloscortti – Kenttä & HCP</h1>
-      <CourseSelector />
-    </div>
+    <Routes>
+      <Route path="/" element={<CourseSelector />} />
+      <Route path="/score" element={<ScoreEntry />} />
+    </Routes>
   );
 }
