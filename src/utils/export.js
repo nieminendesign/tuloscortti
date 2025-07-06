@@ -1,0 +1,1 @@
+// Funktio joka konvertoi HTML:n tai SVG:n PNG:ksi
