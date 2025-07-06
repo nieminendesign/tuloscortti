@@ -1,0 +1,1 @@
+// Valitse ennen kierrosta, mitä tilastoja haluat kirjata (putit, avaukset jne.)

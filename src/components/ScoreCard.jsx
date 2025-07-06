@@ -1,0 +1,1 @@
+// Tämä komponentti näyttää koko kierroksen graafisesti

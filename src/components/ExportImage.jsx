@@ -1,1 +1,1 @@
-// html2canvas export
+// Tämä komponentti luo tuloskorttikuvasta eksportoitavan version

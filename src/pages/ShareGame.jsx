@@ -1,0 +1,1 @@
+// Tässä näkymässä pelaaja voi jakaa kierroksen ryhmälleen linkillä

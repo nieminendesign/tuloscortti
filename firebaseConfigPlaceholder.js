@@ -1,0 +1,1 @@
+// Lisää oma Firebase-konfiguraatiosi tänne ja tallenna .env-tiedostoon

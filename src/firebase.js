@@ -1,0 +1,1 @@
+// Firebase setup file – tuo initializeApp ja konfiguraatio
